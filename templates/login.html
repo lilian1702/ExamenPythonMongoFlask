@@ -1,0 +1,138 @@
+{% extends "index.html" %} 
+{% block content %}
+<script src="../static/js/app.js"></script>
+
+{% with messages = get_flashed_messages(with_categories=true) %} 
+{% if messages %}
+<div class="container mt-3">
+  {% for category, message in messages %}
+  <div class="alert alert-{{ category }} text-center shadow-sm" role="alert">
+    {{ message }}
+  </div>
+  {% endfor %}
+</div>
+{% endif %} 
+{% endwith %}
+
+<div class="container d-flex justify-content-center align-items-center min-vh-100">
+  <div class="border p-4 rounded-4 shadow-lg bg-white" style="max-width: 400px; width: 100%;">
+    <h4 class="text-center mb-4" style="color: #ff6f91;">Inicio de Sesión</h4>
+
+    <form id="frmLogin" enctype="multipart/form-data" class="needs-validation" novalidate>
+      
+      <div class="form-floating mb-3">
+        <input type="email" class="form-control border-pink" id="txtUser" name="txtUser" placeholder="Correo electrónico" required>
+        <label for="txtUser">Correo de Usuario</label>
+      </div>
+
+      <div class="form-floating mb-3">
+        <input type="password" class="form-control border-pink" id="txtPassword" name="txtPassword" placeholder="Contraseña" required>
+        <label for="txtPassword">Contraseña</label>
+      </div>
+
+      <div class="d-grid mb-3">
+        <button type="button" class="btn btn-pink" onclick="login()">Ingresar</button>
+      </div>
+
+      <div class="text-center">
+        <a href="#" data-bs-toggle="modal" data-bs-target="#modalRegistrar" class="text-decoration-none" style="color: #ff6f91;">
+           Registrarse
+        </a>
+      </div>
+      
+    </form>
+  </div>
+</div>
+
+<!-- Modal Registrar -->
+<div class="modal fade" id="modalRegistrar" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <form
+      method="POST"
+      action="/instructorRegister"
+      enctype="multipart/form-data"
+      class="was-validated"
+    >
+      <div class="modal-content rounded-4 shadow-lg">
+        <div class="modal-header" style="background-color: #ffe4e9;">
+          <h3 class="modal-title" style="color: #ff6f91;" id="modalRegistrarLabel">Registrar Instructor</h3>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Cerrar"
+          ></button>
+        </div>
+
+        <div class="modal-body" style="background-color: #fff8f9;">
+          <p class="mb-3 text-center" style="color: #ff6f91;">Ingresa tus datos</p>
+
+          <input
+            type="text"
+            name="nombre"
+            class="form-control mt-2 border-pink"
+            placeholder="Nombre completo"
+            required
+          />
+
+          <select name="regional" class="form-select mt-2 border-pink" required>
+              <option value="">Seleccione una regional</option>
+              {% for reg in regionales %}
+                <option value="{{ reg.id }}">{{ reg.nombre }}</option>
+              {% endfor %}
+          </select>
+
+          <input
+            type="email"
+            name="email"
+            class="form-control mt-2 border-pink"
+            placeholder="Correo electrónico"
+            required
+          />
+
+          <input
+            type="password"
+            name="password"
+            class="form-control mt-2 border-pink"
+            placeholder="Contraseña"
+            required
+          />
+        </div>
+
+        <div class="modal-footer" style="background-color: #ffe4e9;">
+          <button type="submit" class="btn btn-pink">Enviar</button>
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+          >
+            Cerrar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<!-- Estilos adicionales -->
+<style>
+  .btn-pink {
+    background-color: #ff6f91;
+    color: white;
+    font-weight: bold;
+    border: none;
+  }
+  .btn-pink:hover {
+    background-color: #ff3b6f;
+    color: white;
+  }
+  .border-pink {
+    border: 2px solid #ffc1e3;
+  }
+  .border-pink:focus {
+    border-color: #ff6f91;
+    box-shadow: 0 0 5px rgba(255, 111, 145, 0.5);
+  }
+</style>
+
+{% endblock %}

@@ -1,0 +1,75 @@
+<!-- herdar de index -->
+{%extends "index.html"%} {% block menu %} {% include "menu.html" %}
+<!--datatables-->
+<script src="https://code.jquery.com/jquery-3.7.1.js"></script>
+<script src="https://cdn.datatables.net/2.2.2/js/dataTables.min.js"></script>
+<link rel="stylesheet" href="https://cdn.datatables.net/2.2.2/css/dataTables.dataTables.min.css">
+<script src="../static/js/app.js"></script>
+
+<div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h2 class="text-secondary m-0"> Lista de guias</h2>
+        <!-- <span>Bienvenido: {{ session['nombre'] }}</span> -->
+        <a href="/agregarGuiaVista">
+          <button type="button" class="btn btn-success">
+            <i class="fa fa-plus me-2"></i>Agregar Guia
+          </button>
+        </a>
+    </div>
+    <h1>
+
+    </h1>
+    <div class="table-responsive">
+        <table id="tableGuias" class="table table-bordered table-hover table-striped align-middle">
+            <thead class="table-primary text-center">
+                <tr>
+                    <th>Nombre_Guia</th>
+                    <th>descripcion_guia</th>
+                    <th>programa_formacion</th>
+                    <th>Guia_pdf</th>
+                    <th>Nombre_del_Instructor</th>
+                    <th>Fecha_Publicacion</th>
+                    <th>Regional</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for guia in guias %}
+                <tr>
+                    <td class="ps-3">{{ guia.nombre }}</td>
+                    <td class="ps-3">{{ guia.descripcion }}</td>
+                    <td class="ps-3">{{ guia.programa }}</td>
+                    <td class="text-center">
+                        <button class="btn btn-sm btn-outline-danger" onclick="verGuiaPDF('{{guia.documento_pdf}}')" title="Mostrar">
+                            <i class="fa fa-plus
+                            "></i>
+                        </button>
+                    </td>
+                    <td class="text-center">
+                        {% for instructor in instructores %} 
+                            {% if instructor.id == guia.instructor.id %} 
+                                {{ instructor.nombre }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                    <td class="text-center">{{ guia.fecha }}</td>
+                    <td class="text-center">
+                        {% for instructor in instructores %}
+                            {% if instructor.id == guia.instructor.id %}
+                                {{ instructor.regional.nombre }}
+                            {% endif %}
+                        {% endfor %}
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+    </div>
+
+</div>
+<script>
+  new DataTable('#tableGuias');
+</script>
+
+{% endblock %} {% block piePagina %} {% include "piePagina.html" %} {% endblock
+%}

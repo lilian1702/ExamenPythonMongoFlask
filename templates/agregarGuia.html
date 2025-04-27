@@ -1,0 +1,72 @@
+{% extends "index.html" %}
+
+{% block menu %}
+    {% include "menu.html" %}
+{% endblock %}
+
+{% block content %}
+
+<div class="container mt-5">
+    <form method="POST" action="/agregarGuia" enctype="multipart/form-data" class="was-validated border p-4 rounded-4 shadow-lg bg-white">
+        <h3 class="text-center mb-4" style="color: #ff6f91;">Agregar Guía</h3>
+
+        <div class="mb-3">
+            <label class="form-label" style="color: #ff6f91;">Nombre Guía:</label>
+            <input type="text" class="form-control border-pink" name="nombre" id="txtNombre" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" style="color: #ff6f91;">Descripción:</label>
+            <input type="text" class="form-control border-pink" name="descripcion" id="txtDescripcion" required>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" style="color: #ff6f91;">Programa:</label>
+            <select name="programa" class="form-select border-pink" id="" required>
+                <option value="">Seleccione un programa</option>
+                {% for guia in guias %}
+                    <option value="{{ guia.programa }}">{{ guia.programa }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-label" style="color: #ff6f91;">Guía PDF:</label>
+            <input type="file" class="form-control border-pink" name="txtGuiaPDF" id="txtGuiaPDF" accept=".pdf" required>
+        </div>
+
+        <div class="d-flex justify-content-between">
+            <button type="submit" class="btn btn-pink">Guardar</button>
+            <a href="/guiasvista">
+                <button type="button" class="btn btn-danger">Cancelar</button>
+            </a>
+        </div>
+    </form>
+</div>
+
+<!-- Estilos adicionales -->
+<style>
+    .btn-pink {
+        background-color: #ff6f91;
+        color: white;
+        font-weight: bold;
+        border: none;
+    }
+    .btn-pink:hover {
+        background-color: #ff3b6f;
+        color: white;
+    }
+    .border-pink {
+        border: 2px solid #ffc1e3;
+    }
+    .border-pink:focus {
+        border-color: #ff6f91;
+        box-shadow: 0 0 5px rgba(255, 111, 145, 0.5);
+    }
+</style>
+
+{% endblock %}
+
+{% block piePagina %}
+    {% include "piePagina.html" %}
+{% endblock %}
