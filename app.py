@@ -7,12 +7,11 @@ import os
 
 app = Flask(__name__)
 
-CORS(app, resources={r"/*": {"origins": "*"}})  # permite todas las rutas desde cualquier origen
+CORS(app, resources={r"/*": {"origins": "*"}})  
 
 key = os.environ.get("SECRET_KEY")
 
-app.secret_key = f"{key}"# carga la clave secreta desde las variables de entorno
-# uri1= "mongodb://localhost:27017/GuiasProfesores"
+app.secret_key = f"{key}"
 user = os.environ.get("USER_BD")
 
 
